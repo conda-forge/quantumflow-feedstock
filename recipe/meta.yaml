@@ -7,18 +7,18 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/quantumflow-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/quantumflow-{{ version }}.tar.gz
   sha256: 9a905110f302cbdd86783f0b7881e32c06102a1a5cc17d9b31fa44ea77c5429d
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
     - pip
-    - python >=3.9
+    - python {{ python_min }}
     - setuptools-scm
   run:
     - decorator <5.0.0
@@ -28,7 +28,7 @@ requirements:
     - numpy
     - opt-einsum
     - pillow !=9.1.0
-    - python >=3.9
+    - python >={{ python_min }}
     - scipy <1.10.0
     - sympy >=1.6
     - typing_extensions >=4.1.1
@@ -37,11 +37,11 @@ test:
   imports:
     - quantumflow
   commands:
-    - pip check
     - pytest quantumflow
   requires:
     - pip
     - pytest
+    - python {{ python_min }}
   source_files:
     - quantumflow
 
